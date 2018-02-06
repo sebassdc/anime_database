@@ -15,11 +15,13 @@ Public Sub Form_Open()
   cvAnimes.Columns[1].Text = "Capitulo"
   cvAnimes.Columns[2].Text = "Año"
   cvAnimes.Columns[3].Text = "Autor"
+  readBackup("animes.json")
 End
 
 Public Sub Form_Show()
   Dim i As Integer
   Dim animeClave As String
+  updateBackup("animes.json")
   cvAnimes.Clear()
   If animes.Length > 0 Then
     For i = 0 To animes.Length - 1 Step 1
@@ -33,6 +35,20 @@ Public Sub Form_Show()
   Endif
 End
 
-Public Sub cvAnimes_Data(row As Integer, column As Integer)
-  
+Public Sub readBackup(filename As String)
+  Dim path As String = User.Home & "/.anime_database/" & filename
+  Print "readBackup: Path: " & path
+  If Exist(path) Then
+    animes = JSON.Decode(File.Load(path), True)
+  Endif
+End
+
+
+Public Sub updateBackup(filename As String)
+  Dim hFileOut As File
+  Dim path As String = User.Home & "/.anime_database/"
+  If Not Exist(path & filename) Then
+      Mkdir path
+  Endif
+  File.Save(path & filename, JSON.Encode(animes))
 End
