@@ -1,0 +1,41 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,51,65)
+  Text = ("Suphaa anime organizer - Agregar")
+  { Button1 Button
+    MoveScaled(22,55,16,4)
+    Text = ("Agregar")
+  }
+  { tbNombre TextBox
+    MoveScaled(19,14,24,4)
+  }
+  { Label1 Label
+    MoveScaled(10,14,9,4)
+    Text = ("Nombre: ")
+  }
+  { tbCapitulos TextBox
+    MoveScaled(19,21,24,4)
+  }
+  { Label2 Label
+    MoveScaled(10,21,9,4)
+    Text = ("Capitulos: ")
+  }
+  { tbAno TextBox
+    MoveScaled(19,28,24,4)
+  }
+  { Label3 Label
+    MoveScaled(10,28,9,4)
+    Text = ("Año: ")
+  }
+  { tbAutor TextBox
+    MoveScaled(19,35,24,4)
+  }
+  { Label4 Label
+    MoveScaled(10,35,9,4)
+    Text = ("Autor: ")
+  }
+  { lbState Label
+    MoveScaled(19,48,24,4)
+  }
+}

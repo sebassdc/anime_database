@@ -1,0 +1,14 @@
+' Gambas class file
+
+Public Sub Button1_Click()
+  ' Crear anime
+  Dim anime As JSONCollection = JSON.Decode("{}", True)
+  anime.Add(tbNombre.Text, "Name")
+  anime.Add(tbCapitulos.Text, "Capitulo")
+  anime.Add(tbAno.Text, "Ano")
+  anime.Add(tbAutor.Text, "Autor")
+  
+  FMain.animes.Add(anime)
+  FMain.Show()
+  FormAgregar.Close()
+End

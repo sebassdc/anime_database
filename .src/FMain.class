@@ -1,0 +1,38 @@
+' Gambas class file
+
+Public animes As JSONCollection[] = []
+
+Public Sub btnAgregar_Click()
+
+  FormAgregar.Show()
+  FMain.Hide()
+End
+
+
+Public Sub Form_Open()
+  cvAnimes.Columns.Count = 4
+  cvAnimes.Columns[0].Text = "Nombre"
+  cvAnimes.Columns[1].Text = "Capitulo"
+  cvAnimes.Columns[2].Text = "Año"
+  cvAnimes.Columns[3].Text = "Autor"
+End
+
+Public Sub Form_Show()
+  Dim i As Integer
+  Dim animeClave As String
+  cvAnimes.Clear()
+  If animes.Length > 0 Then
+    For i = 0 To animes.Length - 1 Step 1
+      Print JSON.Encode(animes)
+      animeClave = animes[i]["Name"]
+      cvAnimes.Add(animeClave, animeClave)
+      cvAnimes[animeClave][1] = animes[i]["Capitulo"]
+      cvAnimes[animeClave][2] = animes[i]["Ano"]
+      cvAnimes[animeClave][3] = animes[i]["Autor"]
+    Next
+  Endif
+End
+
+Public Sub cvAnimes_Data(row As Integer, column As Integer)
+  
+End

@@ -1,0 +1,21 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,83,50)
+  Text = ("Suphaaa anime organizer - Main")
+  { btnAgregar Button
+    MoveScaled(6,9,16,4)
+    Text = ("Agregar")
+  }
+  { btnBuscar Button
+    MoveScaled(6,23,16,4)
+    Text = ("Buscar")
+  }
+  { btnEliminar Button
+    MoveScaled(6,36,16,4)
+    Text = ("Eliminar")
+  }
+  { cvAnimes ColumnView
+    MoveScaled(26,1,56,48)
+  }
+}
