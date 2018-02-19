@@ -34,6 +34,7 @@ Public Sub updateColumnView(store As JSONCollection[])
     For i = 0 To store.Length - 1 Step 1
       animeClave = animes[i]["Name"]
       cvAnimes.Add(animeClave, animeClave)
+      cvAnimes[animeClave][0] = store[i]["Name"]
       cvAnimes[animeClave][1] = store[i]["Capitulo"]
       cvAnimes[animeClave][2] = store[i]["Ano"]
       cvAnimes[animeClave][3] = store[i]["Autor"]
@@ -41,10 +42,6 @@ Public Sub updateColumnView(store As JSONCollection[])
   Endif
 End
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 0101b28e6367f48f5bbd555d4a841c8ba85b5817
 Public Sub readBackup(filename As String)
   Dim path As String = User.Home & "/.anime_database/" & filename
   Print "readBackup: Path: " & path
@@ -61,7 +58,6 @@ Public Sub updateBackup(filename As String)
       Mkdir path
   Endif
   File.Save(path & filename, JSON.Encode(animes))
-<<<<<<< HEAD
 End
 
 
@@ -78,7 +74,7 @@ End
 
 
 Public Sub tbFilter_KeyRelease()
-  filterStore = filterByName(animes, tbFilter.Text, True)
+  filterStore = filterByName(animes, tbFilter.Text, False)
   updateColumnView(filterStore)
 End
 
@@ -88,13 +84,12 @@ Function filterByName(arr As JSONCollection[], name As String, invert As Boolean
   Dim condition As Boolean = False
   Print arr.Length
   For i = 0 To arr.Length - 1 Step 1
-    condition = Not (InStr(name, arr[i]["Name"]) = 0)
+    condition = Not (InStr(arr[i]["Name"], name) = 0)
     If invert Then
       condition = Not condition
     Endif
     
     If condition Then
-      Print i
       newArr.Add(arr[i])
     Endif
   Next
@@ -104,7 +99,5 @@ End
 Public Sub btnCancelar_Click()
   tbFilter.Text = ""
   updateColumnView(animes)
-
-=======
->>>>>>> 0101b28e6367f48f5bbd555d4a841c8ba85b5817
+  filterStore = []
 End
