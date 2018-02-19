@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Public Sub Button1_Click()
+Public Sub btnAdd_Click()
   ' Crear anime
   Dim anime As JSONCollection = JSON.Decode("{}", True)
   anime.Add(tbNombre.Text, "Name")

@@ -1,6 +1,3 @@
-[Bookmarks]
-FMain=[]
-
 [Breakpoints]
 Count=0
 
@@ -9,11 +6,12 @@ Count=0
 
 [OpenFile]
 File[1]=".src/FMain.form"
-File[2]=".src/FMain.class:20.19"
+File[2]=".src/FMain.class:18.80"
 File[3]=".src/FormAgregar.form"
 Active=2
-File[4]=".src/FormAgregar.class:2.9"
+File[4]=".src/FormAgregar.class:15.3"
 Count=4
+Fold[2]=[5,12,43,52,62]
 
 [Watches]
 Count=0

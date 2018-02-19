@@ -3,7 +3,7 @@
 { Form Form
   MoveScaled(0,0,51,65)
   Text = ("Suphaa anime organizer - Agregar")
-  { Button1 Button
+  { btnAdd Button
     MoveScaled(22,55,16,4)
     Text = ("Agregar")
   }
