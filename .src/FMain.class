@@ -28,6 +28,7 @@ End
 Public Sub updateColumnView(store As JSONCollection[])
   Dim i As Integer
   Dim animeClave As String
+  updateBackup("animes.json")
   cvAnimes.Clear()
   If store.Length > 0 Then
     For i = 0 To store.Length - 1 Step 1
@@ -40,7 +41,10 @@ Public Sub updateColumnView(store As JSONCollection[])
   Endif
 End
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0101b28e6367f48f5bbd555d4a841c8ba85b5817
 Public Sub readBackup(filename As String)
   Dim path As String = User.Home & "/.anime_database/" & filename
   Print "readBackup: Path: " & path
@@ -57,6 +61,7 @@ Public Sub updateBackup(filename As String)
       Mkdir path
   Endif
   File.Save(path & filename, JSON.Encode(animes))
+<<<<<<< HEAD
 End
 
 
@@ -100,4 +105,6 @@ Public Sub btnCancelar_Click()
   tbFilter.Text = ""
   updateColumnView(animes)
 
+=======
+>>>>>>> 0101b28e6367f48f5bbd555d4a841c8ba85b5817
 End
