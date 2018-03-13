@@ -2,13 +2,15 @@
 
 Public Sub btnAdd_Click()
   ' Crear anime
-  Dim anime As JSONCollection = JSON.Decode("{}", True)
-  anime.Add(tbNombre.Text, "Name")
-  anime.Add(tbCapitulos.Text, "Capitulo")
-  anime.Add(tbAno.Text, "Ano")
-  anime.Add(tbAutor.Text, "Autor")
+  'Dim anime As JSONCollection = JSON.Decode("{}", True)
+  'anime.Add(tbNombre.Text, "Name")
+  'anime.Add(tbCapitulos.Text, "Capitulo")
+  'anime.Add(tbAno.Text, "Ano")
+  'anime.Add(tbAutor.Text, "Autor")
   
-  FMain.animes.Add(anime)
+  'FMain.animes.Add(anime)
+  FMain.hConn.Exec("insert into animes values (&1, &2, &3, &4)", tbNombre.Text, CInt(tbCapitulos.Text), tbAno.Text, tbAutor.Text)
+
   FMain.Show()
   FormAgregar.Close()
 End

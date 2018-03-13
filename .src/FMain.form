@@ -1,25 +1,25 @@
 # Gambas Form File 3.0
 
 { Form Form
-  MoveScaled(0,0,48,58)
+  MoveScaled(0,0,66,58)
   Text = ("Suphaaa anime organizer - Main")
   Padding = 10
   { btnAgregar Button
-    MoveScaled(14,49,16,4)
+    MoveScaled(22,49,16,4)
     Text = ("Agregar")
   }
   { cvAnimes ColumnView
-    MoveScaled(2,2,44,33)
+    MoveScaled(2,2,62,33)
   }
   { tbFilter TextBox
-    MoveScaled(2,41,31,5)
+    MoveScaled(2,41,48,5)
   }
   { TextLabel1 TextLabel
     MoveScaled(3,37,7,3)
     Text = ("Buscar:")
   }
   { btnCancelar Button
-    MoveScaled(33,41,13,5)
+    MoveScaled(51,41,13,5)
     Text = ("Cancelar")
   }
 }

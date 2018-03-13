@@ -1,5 +1,7 @@
 ' Gambas class file
 
+Private hConn As Connection
+
 Public animes As JSONCollection[] = []
 Public filterStore As JSONCollection[] = []
 Private STORAGE As String = "animes.json"
@@ -17,12 +19,14 @@ Public Sub Form_Open()
   cvAnimes.Columns[2].Text = "Año"
   cvAnimes.Columns[3].Text = "Autor"
   readBackup(STORAGE)
+  If ConectarBase() Then Return
   ' Print JSON.Encode(filterByName(animes, "Naruto"))
 End
 
 Public Sub Form_Show()
   updateBackup(STORAGE)
-  updateColumnView(animes)
+  'updateColumnView(animes)
+  updateColumnViewFromDatabase()
 End
 
 Public Sub updateColumnView(store As JSONCollection[])
@@ -41,6 +45,32 @@ Public Sub updateColumnView(store As JSONCollection[])
     Next
   Endif
 End
+Public Sub updateColumnViewFromDatabase()
+  Dim hResul As Result
+  Dim i As Integer
+  Dim animeClave As String
+  hResul = hConn.Exec("select * from animes")
+  cvAnimes.Clear()
+  Do While hResul.Available
+    animeClave = hResul["nombre"]
+    cvAnimes.Add(animeClave, animeClave)
+    cvAnimes[animeClave][0] = hResul["nombre"]
+    cvAnimes[animeClave][1] = hResul["capitulos"]
+    cvAnimes[animeClave][2] = hResul["ano"]
+    cvAnimes[animeClave][3] = hResul["autor"]
+    hResul.MoveNext()
+  Loop
+  'If store.Length > 0 Then
+  '  For i = 0 To store.Length - 1 Step 1
+  '    animeClave = animes[i]["Name"]
+  '    cvAnimes.Add(animeClave, animeClave)
+  '    cvAnimes[animeClave][0] = store[i]["Name"]
+  '    cvAnimes[animeClave][1] = store[i]["Capitulo"]
+  '    cvAnimes[animeClave][2] = store[i]["Ano"]
+  '    cvAnimes[animeClave][3] = store[i]["Autor"]
+  '  Next
+  'Endif
+End
 
 Public Sub readBackup(filename As String)
   Dim path As String = User.Home & "/.anime_database/" & filename
@@ -49,6 +79,8 @@ Public Sub readBackup(filename As String)
     animes = JSON.Decode(File.Load(path), True)
   Endif
 End
+
+
 
 
 Public Sub updateBackup(filename As String)
@@ -66,10 +98,12 @@ Public Sub cvAnimes_KeyRelease()
   If Key.Code = Key.Delete Then
     If cvAnimes.Current = Null Then Return
     If cvAnimes.Current.Selected = False Then Return
-    animes = filterByName(animes, cvAnimes.Current.Text, False)
+    'animes = filterByName(animes, cvAnimes.Current.Text, True)
+    hConn.Exec("delete from animes where nombre=\"&1\"", cvAnimes.Current.Text)
   Endif
-  updateBackup(STORAGE)
-  updateColumnView(animes)
+  'updateBackup(STORAGE)
+  'updateColumnView(animes)
+  updateColumnViewFromDatabase()
 End
 
 
@@ -82,7 +116,6 @@ Function filterByName(arr As JSONCollection[], name As String, invert As Boolean
   Dim i As Integer
   Dim newArr As JSONCollection[] = []
   Dim condition As Boolean = False
-  Print arr.Length
   For i = 0 To arr.Length - 1 Step 1
     condition = Not (InStr(arr[i]["Name"], name) = 0)
     If invert Then
@@ -97,7 +130,28 @@ Function filterByName(arr As JSONCollection[], name As String, invert As Boolean
 End
 
 Public Sub btnCancelar_Click()
+  'tbFilter.Text = ""
+  'updateColumnView(animes)
+  'filterStore = []
   tbFilter.Text = ""
-  updateColumnView(animes)
-  filterStore = []
+  updateColumnViewFromDatabase()
+  
 End
+
+Private Function ConectarBase() As Boolean
+  
+  If hConn <> Null Then Return False
+  
+  hConn = New Connection
+  hConn.Host = User.Home
+  hConn.Name = "animes"
+  hConn.Type = "sqlite"
+  Try hConn.Open()
+  If Error Then
+    hConn = Null
+    Print "Error al conectarse con la base de datos"
+    Return True
+  Endif
+  Return False
+End
+
