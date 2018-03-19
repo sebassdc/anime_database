@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Private hConn As Connection
+Public hConn As Connection
 
 Public animes As JSONCollection[] = []
 Public filterStore As JSONCollection[] = []
@@ -26,7 +26,7 @@ End
 Public Sub Form_Show()
   updateBackup(STORAGE)
   'updateColumnView(animes)
-  updateColumnViewFromDatabase()
+  updateColumnViewFromDatabase("select * from animes")
 End
 
 Public Sub updateColumnView(store As JSONCollection[])
@@ -45,11 +45,11 @@ Public Sub updateColumnView(store As JSONCollection[])
     Next
   Endif
 End
-Public Sub updateColumnViewFromDatabase()
+Public Sub updateColumnViewFromDatabase(queryString As String)
   Dim hResul As Result
   Dim i As Integer
   Dim animeClave As String
-  hResul = hConn.Exec("select * from animes")
+  hResul = hConn.Exec(queryString)
   cvAnimes.Clear()
   Do While hResul.Available
     animeClave = hResul["nombre"]
@@ -94,22 +94,27 @@ End
 
 
 Public Sub cvAnimes_KeyRelease()
+  Dim deleteString As String
 
   If Key.Code = Key.Delete Then
     If cvAnimes.Current = Null Then Return
     If cvAnimes.Current.Selected = False Then Return
     'animes = filterByName(animes, cvAnimes.Current.Text, True)
-    hConn.Exec("delete from animes where nombre=\"&1\"", cvAnimes.Current.Text)
+    deleteString = "delete from animes where nombre=\"" & cvAnimes.Current.Text & "\""
+    hConn.Exec(deleteString)
   Endif
   'updateBackup(STORAGE)
   'updateColumnView(animes)
-  updateColumnViewFromDatabase()
+  updateColumnViewFromDatabase("select * from animes")
 End
 
 
 Public Sub tbFilter_KeyRelease()
-  filterStore = filterByName(animes, tbFilter.Text, False)
-  updateColumnView(filterStore)
+  Dim filterString As String
+  filterString = "select * from animes where nombre like \"" & tbFilter.text & "%\""
+  updateColumnViewFromDatabase(filterString)
+'   filterStore = filterByName(animes, tbFilter.Text, False)
+'   updateColumnView(filterStore)
 End
 
 Function filterByName(arr As JSONCollection[], name As String, invert As Boolean) As JSONCollection[]
@@ -134,7 +139,7 @@ Public Sub btnCancelar_Click()
   'updateColumnView(animes)
   'filterStore = []
   tbFilter.Text = ""
-  updateColumnViewFromDatabase()
+  updateColumnViewFromDatabase("select * from animes")
   
 End
 
