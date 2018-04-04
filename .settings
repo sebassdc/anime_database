@@ -6,12 +6,13 @@ Count=0
 
 [OpenFile]
 File[1]=".src/FMain.form"
-File[2]=".src/FMain.class:0.96"
+File[2]=".src/FMain.class:26.2"
 File[3]=".src/FormAgregar.form"
-Active=2
+Active=5
 File[4]=".src/FormAgregar.class:2.11"
-Count=4
-Fold[2]=[0,7,14,25,74,85,109,114,131,140]
+Count=5
+Fold[2]=[7,14,25,74,85,95,111,119,136]
+File[5]=".connection/animes.connection"
 
 [Watches]
 Count=0
